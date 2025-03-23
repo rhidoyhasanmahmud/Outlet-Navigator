@@ -8,10 +8,10 @@ This project is a full-stack web application that scrapes McDonald's outlet data
 - ✅ Interactive map frontend with Leaflet.js
 - ✅ Chatbot-ready filtering layer
 
----
+> Frontend Map Preview
 
 ![Frontend Map Preview](images/map.png)
-
+---
 
 ## 📦 Project Structure
 ```
