@@ -47,7 +47,7 @@ You can integrate with a chatbot using `chatbot/mock.py`. It supports simple rul
 answer_query("Which outlets are open 24 hours?", outlet_data)
 answer_query("birthday", outlet_data)
 ```
-
+---
 ## 📡 API Usage
 
 ### 🔍 Get all outlets
