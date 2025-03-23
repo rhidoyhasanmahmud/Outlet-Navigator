@@ -10,6 +10,9 @@ This project is a full-stack web application that scrapes McDonald's outlet data
 
 ---
 
+![Frontend Map Preview](images/map.png)
+
+
 ## 📦 Project Structure
 ```
 Outlet-Navigator/
