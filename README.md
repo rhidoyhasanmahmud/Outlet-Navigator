@@ -71,8 +71,6 @@ Returns JSON list of all McDonald's outlets scraped from Kuala Lumpur.
 
 ---
 
----
-
 ## 📄 License
 MIT License © 2025 Hasan Mahmud Rhidoy
 
