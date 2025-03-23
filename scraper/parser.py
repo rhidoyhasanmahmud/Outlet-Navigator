@@ -3,31 +3,24 @@ from scraper.models import Outlet
 import json
 
 class OutletParser:
-    def parse(self, html: str):
+    def parse(self, html):
         soup = BeautifulSoup(html, "html.parser")
-        outlet_blocks = soup.select(".addressBox")
-        outlets = []
+        blocks = soup.select(".addressBox")
+        results = []
 
-        for block in outlet_blocks:
-            script_tag = block.find("script", type="application/ld+json")
-            if not script_tag:
-                continue
-
+        for block in blocks:
             try:
-                data = json.loads(script_tag.string)
+                script = block.find("script", type="application/ld+json")
+                data = json.loads(script.string)
                 name = data.get("name")
                 address = data.get("address")
                 phone = data.get("telephone")
-                lat = data.get("geo", {}).get("latitude")
-                lng = data.get("geo", {}).get("longitude")
+                lat = data["geo"]["latitude"]
+                lng = data["geo"]["longitude"]
             except:
                 continue
 
-            features = [
-                tooltip.get_text(strip=True)
-                for tooltip in block.select(".ed-tooltiptext")
-                if tooltip.get_text(strip=True)
-            ]
+            features = [t.get_text(strip=True) for t in block.select(".ed-tooltiptext")]
 
             waze_link = ""
             for a in block.find_all("a"):
@@ -35,7 +28,5 @@ class OutletParser:
                     waze_link = a.get("href", "")
                     break
 
-            outlet = Outlet(name, address, phone, lat, lng, features, waze_link)
-            outlets.append(outlet)
-
-        return outlets
+            results.append(Outlet(name, address, phone, lat, lng, features, waze_link))
+        return results

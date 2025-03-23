@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>McDonald's KL Outlets</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 100vh;"></div>
+    <script>
+    fetch("http://localhost:8000/outlets")
+        .then(res => res.json())
+        .then(data => {
+            const map = L.map('map').setView([3.139, 101.6869], 12);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            data.forEach(o => {
+                const marker = L.marker([o.latitude, o.longitude]).addTo(map);
+                marker.bindPopup(`<b>${o.name}</b><br>${o.address}`);
+                L.circle([o.latitude, o.longitude], { radius: 5000 }).addTo(map);
+            });
+        });
+    </script>
+</body>
+</html>

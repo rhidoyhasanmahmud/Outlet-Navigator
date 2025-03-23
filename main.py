@@ -1,15 +1,33 @@
 from scraper.scraper import PageScraper
 from scraper.parser import OutletParser
 from scraper.service import McDonaldsLocatorService
+from scraper.models import OutletDB
+from database.db import SessionLocal, engine, Base
+
+Base.metadata.create_all(bind=engine)
+
+def store_to_db(outlets):
+    db = SessionLocal()
+    for o in outlets:
+        record = OutletDB(
+            name=o['name'],
+            address=o['address'],
+            phone=o['phone'],
+            latitude=o['latitude'],
+            longitude=o['longitude'],
+            features=", ".join(o['features']),
+            waze_link=o['waze_link']
+        )
+        db.add(record)
+    db.commit()
+    print("Saved to DB:", db.query(OutletDB).count())
+
+    db.close()
 
 if __name__ == "__main__":
-    scraper = PageScraper("Kuala Lumpur")
+    scraper = PageScraper()
     parser = OutletParser()
     service = McDonaldsLocatorService(scraper, parser)
-
-    results = service.get_outlets()
-
-    for i, r in enumerate(results, 1):
-        print(f"\nOutlet {i}")
-        for k, v in r.items():
-            print(f"{k.capitalize():<12}: {', '.join(v) if isinstance(v, list) else v}")
+    outlets = service.get_outlets()
+    store_to_db(outlets)
+    print(f"Stored {len(outlets)} outlets in the database.")
