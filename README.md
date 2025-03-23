@@ -20,7 +20,8 @@ Outlet-Navigator/
 ├── api/               # FastAPI backend with CORS
 ├── database/          # SQLAlchemy DB setup
 ├── frontend/          # HTML + Leaflet map
-├── chatbot/           # Query mock layer
+├── chatbot/           # GPT-powered query responder
+├── tests/             # Unit + integration tests
 ├── main.py            # Run scraper + populate DB
 ├── requirements.txt   # Dependencies
 ├── Dockerfile         # Docker container for API + scraper
@@ -44,11 +45,16 @@ This will:
 Open `frontend/index.html` manually in a browser (it reads from the backend API).
 
 ---
-## 🧠 Chatbot Query
-You can integrate with a chatbot using `chatbot/mock.py`. It supports simple rules:
-```python
-answer_query("Which outlets are open 24 hours?", outlet_data)
-answer_query("birthday", outlet_data)
+## 🧠 GPT-Based Search Query
+This project supports natural language search powered by OpenAI GPT.
+
+### Supported queries:
+- "Which outlets in KL operate 24 hours?"
+- "Which outlet allows birthday parties?"
+
+✅ Set your API key before running:
+```bash
+export OPENAI_API_KEY=sk-xxxxx
 ```
 ---
 ## 📡 API Usage

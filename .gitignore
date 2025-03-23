@@ -11,6 +11,7 @@ venv
 scraper/__pycache__/
 api/__pycache__/
 database/__pycache__/
+tests/__pycache__/
 outlets.db
 
 # dependencies
